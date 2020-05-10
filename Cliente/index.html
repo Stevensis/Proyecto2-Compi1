@@ -1,0 +1,153 @@
+<html>
+    <title>Hola mundo</title>
+    <head> 
+        <link rel="stylesheet" href="../css/bootstrap.min.css"> 
+        <script src="../js/editIndex.js"></script>
+    </head>
+    <body>
+        <header class="navbar bg-dark">
+            <div class="container-fluid">
+                <h1>Detector de copia Java</h1>
+            </div>
+        </header>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Abrir Archivo</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Nueva ventana</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Guardar Archivo</a>
+              </li>
+            </ul>
+        </nav>
+        <div class= "main row text-white bg-info col-md-12" >
+            <div class="col-md-6">               
+                <div class="form-group">
+                    <h3 id="h1s"> {{ . }} </h3>
+                    <label for="exampleFormControlTextarea1">Primer Codigo</label>
+                    <form>
+                        <textarea  type="text" class="form-control rounded-0"  rows="15" id="txtA1" name="txtA1"></textarea>
+                    </form>
+                    
+                </div>
+                <div class="">
+                    <form>
+                        <button type="button"  onclick="start()"class="btn btn-primary btn-lg" >Analizar</button>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <h3> aver </h3>
+                    <label for="exampleFormControlTextarea1">Segundo Codigo</label>
+                    <textarea class="form-control rounded-0"  rows="15" type="text" id="txtA2"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class= "main row text-white bg-info col-md-12">
+            <div class="col-md-6">    
+                <h1>Tabla de simbolos</h1>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped" id="Table3">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Fila</th>
+                            <th>valor</th>
+                        </tr>    
+                    </table>
+                </div>
+                
+                <style type="text/css">
+                    .my-custom-scrollbar {
+                    position: relative;
+                    height: 200px;
+                    overflow: auto;
+                    }
+                    .table-wrapper-scroll-y {
+                    display: block;
+                    }
+                  </style>
+            </div>
+            <div class="col-md-6">
+               <div class="">
+                    <div class="form-group">
+                        <h3> aver </h3>
+                        <label for="exampleFormControlTextarea1">Html</label>
+                        <textarea class="form-control rounded-5"  rows="6" id="txtA3" readonly></textarea>
+                    </div>
+               </div>
+               <div class=""> 
+                    <div class="form-group">
+                        <h3> aver </h3>
+                        <label for="exampleFormControlTextarea1">Json</label>
+                        <textarea class="form-control rounded-5" rows="6" id="txtA4" readonly></textarea>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <div class= "main row text-white bg-info col-md-12">
+            <div class="col-md-6">               
+                <h1>Reporte de Tokens</h1>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped" id="Table1">
+                        <tr>
+                            <th>No</th>
+                            <th>Lexema</th>
+                            <th>Token</th>
+                            <th>Fila</th>
+                            <th>Columna</th>
+                        </tr>    
+                    </table>
+                </div>
+                
+                <style type="text/css">
+                    .my-custom-scrollbar {
+                    position: relative;
+                    height: 200px;
+                    overflow: auto;
+                    }
+                    .table-wrapper-scroll-y {
+                    display: block;
+                    }
+                  </style>
+            </div>
+            <div class="col-md-6">
+                <h1>Reporte de Errores</h1>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped" id="Table2">
+                        <tr>
+                            <th>No</th>
+                            <th>Lexema</th>
+                            <th>Descripcion</th>
+                            <th>Tipo</th>
+                            <th>Fila</th>
+                            <th>Columna</th>
+                        </tr>    
+                    </table>
+                </div>
+                
+                <style type="text/css">
+                    .my-custom-scrollbar {
+                    position: relative;
+                    height: 200px;
+                    overflow: auto;
+                    }
+                    .table-wrapper-scroll-y {
+                    display: block;
+                    }
+                  </style>
+            </div>
+
+            
+        </div>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/jquery.backtotop.js"></script>
+        <script src="../js/jquery.mobilemenu.js"></script>
+    </body>
+</html>
