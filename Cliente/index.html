@@ -2,7 +2,14 @@
     <title>Hola mundo</title>
     <head> 
         <link rel="stylesheet" href="../css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.0.6/themes/default/style.min.css"> 
         <script src="../js/editIndex.js"></script>
+        <script src="../js/editIndex.js"></script>
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/jquery.backtotop.js"></script>
+        <script src="../js/jquery.mobilemenu.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.0.6/jstree.min.js"></script>
     </head>
     <body>
         <header class="navbar bg-dark">
@@ -36,6 +43,7 @@
                 <div class="">
                     <form>
                         <button type="button"  onclick="start()"class="btn btn-primary btn-lg" >Analizar</button>
+                        <button type="button"  onclick="arbol()"class="btn btn-primary btn-lg" >Refrsh</button>
                     </form>
                     
                 </div>
@@ -48,30 +56,14 @@
                 </div>
             </div>
         </div>
-        <div class= "main row text-white bg-info col-md-12">
+        <div class= "main row text-black bg-info col-md-12">
             <div class="col-md-6">    
-                <h1>Tabla de simbolos</h1>
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                    <table class="table table-striped" id="Table3">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Fila</th>
-                            <th>valor</th>
-                        </tr>    
-                    </table>
+                <h1>Tree Codigo 1</h1>
+                <div id="jstree-tree" class="list-group-item node-treeview-selectable search-result">
+                   <script>
+                       
+                   </script>
                 </div>
-                
-                <style type="text/css">
-                    .my-custom-scrollbar {
-                    position: relative;
-                    height: 200px;
-                    overflow: auto;
-                    }
-                    .table-wrapper-scroll-y {
-                    display: block;
-                    }
-                  </style>
             </div>
             <div class="col-md-6">
                <div class="">
@@ -146,8 +138,6 @@
 
             
         </div>
-        <script src="../js/jquery.min.js"></script>
-        <script src="../js/jquery.backtotop.js"></script>
-        <script src="../js/jquery.mobilemenu.js"></script>
+
     </body>
 </html>
