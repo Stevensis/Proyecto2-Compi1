@@ -7,10 +7,13 @@ var Nodo = /** @class */ (function () {
         this.lexema = lexemaC;
         this.id = idC;
     }
-    Nodo.prototype.encontrarNode = function (listaNodo) {
+    Nodo.prototype.searchNode = function (listaNodo) {
         for (var i = 0; i < listaNodo.length; i++) {
             this.lstNodo.push(listaNodo[i]);
         }
+    };
+    Nodo.prototype.addLastChildren = function (NodoAdd) {
+        this.lstNodo[this.lstNodo.length - 1].lstNodo.push(NodoAdd);
     };
     return Nodo;
 }());

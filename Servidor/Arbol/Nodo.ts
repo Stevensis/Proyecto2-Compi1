@@ -11,9 +11,13 @@ export class Nodo{
         this.id = idC;
     }
 
-    encontrarNode(listaNodo:Array<Nodo>){
+    searchNode(listaNodo:Array<Nodo>){
         for(let i=0;i<listaNodo.length;i++){
             this.lstNodo.push(listaNodo[i]);
         }
+    }
+
+    addLastChildren(NodoAdd:Nodo){
+        this.lstNodo[this.lstNodo.length-1].lstNodo.push(NodoAdd);
     }
 }
