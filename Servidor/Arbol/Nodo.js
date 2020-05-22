@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Nodo = /** @class */ (function () {
     function Nodo(tipoC, lexemaC, idC) {
+        this.tipodato = "";
         this.lstNodo = [];
         this.tipo = tipoC;
         this.lexema = lexemaC;

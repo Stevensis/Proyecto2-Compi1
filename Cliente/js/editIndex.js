@@ -1,13 +1,14 @@
 function start(){
 
     var texto = document.getElementById("txtA1").value;
+    var texto2 = document.getElementById("txtA2").value;
     console.log(texto);
 
     var url='http://localhost:8080/Analizar/';
 
    
 
-    $.post(url,{text:texto},function(data,status){
+    $.post(url,{text:texto, text2:texto2},function(data,status){
         if(status.toString()=="success"){
             alert("El resultado es: "+data.toString());
             $('#jstree-tree').jstree("destroy");

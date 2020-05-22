@@ -3,7 +3,7 @@ export class Nodo{
     lexema:string;
     tipo:string;
     lstNodo:Array<Nodo>
-
+    tipodato:string="";
     constructor(tipoC:string,lexemaC:string,idC:number){
         this.lstNodo = [];
         this.tipo = tipoC;

@@ -2,6 +2,8 @@
 /*------------------------------------------------IMPORTS----------------------------------------------*/
 %{
     let NNodo=require('../Arbol/Nodo');
+    let NError= require('../Arbol/Error');
+    let lstError=[];
     let contador=0;
 %}
 
@@ -126,10 +128,10 @@ CUERPOCLASS2: DECLARACIONVARIABLE tk_puntoycoma {$$=$1;}
       |       DECLARACIONFUNCION {$$=$1;}
       ;
 /*Declaracion de funciones*/
-DECLARACIONFUNCION: DATETIPO tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Funcion",$2+"",contador++);}
-      |             DATETIPO tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Funcion",$2+"",contador++); $$.searchNode($4);}
-      |             DATETIPO tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Funcion",$2+"",contador++);  $$.searchNode($4); let temp5 = new NNodo.Nodo("ContenidoF","Contenido",contador++); temp5.searchNode($7); $$.lstNodo.push(temp5); }
-      |             DATETIPO tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Funcion",$2+"",contador++); let temp6 = new NNodo.Nodo("ContenidoF","Contenido",contador++); temp6.searchNode($6); $$.lstNodo.push(temp6);  }
+DECLARACIONFUNCION: DATETIPO tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1; let parametrosF3=new NNodo.Nodo("Parametros","parametros",contador++);  $$.lstNodo.push(parametrosF3);}
+      |             DATETIPO tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1; let parametrosF1=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF1.searchNode($4); $$.lstNodo.push(parametrosF1);}
+      |             DATETIPO tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1;  let parametrosF2=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF2.searchNode($4); $$.lstNodo.push(parametrosF2); let temp5 = new NNodo.Nodo("ContenidoF","Contenido",contador++); temp5.searchNode($7); $$.lstNodo.push(temp5); }
+      |             DATETIPO tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1; let parametrosF4=new NNodo.Nodo("Parametros","parametros",contador++); $$.lstNodo.push(parametrosF4); let temp6 = new NNodo.Nodo("ContenidoF","Contenido",contador++); temp6.searchNode($6); $$.lstNodo.push(temp6);   }
 ;      
 /*Declaracion de variables*/
 DECLARACIONVARIABLE: DATETIPO LSTIDS {$$=new NNodo.Nodo("tipoDato",$1+"",contador++); $$.searchNode($2);}
@@ -140,14 +142,14 @@ LSTIDS: LSTIDS tk_coma tk_id { $$=$1; $$.push(new NNodo.Nodo("ID",$3+"",contador
       | tk_id { $$=[]; $$.push(new NNodo.Nodo("ID",$1+"",contador++));  }
 ;
 /*Declaracion de metodo*/
-DECLARACIONMETODO: tk_void tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++);}
-      |     tk_void tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++);  $$.searchNode($4); let temp4 = new NNodo.Nodo("ContenidoM","Contenido",contador++); temp4.searchNode($7); $$.lstNodo.push(temp4); }
-      |     tk_void tk_id tk_parentecisIz  tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let temp3 = new NNodo.Nodo("ContenidoM","Contenido",contador++); temp3.searchNode($6); $$.lstNodo.push(temp3);  }
-      |     tk_void tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz  tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); $$.searchNode($4);}
+DECLARACIONMETODO: tk_void tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM2=new NNodo.Nodo("Parametros","parametros",contador++);  $$.lstNodo.push(parametrosM2);}
+      |     tk_void tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM0=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM0.searchNode($4); $$.lstNodo.push(parametrosM0) ; let temp4 = new NNodo.Nodo("ContenidoM","Contenido",contador++); temp4.searchNode($7); $$.lstNodo.push(temp4); }
+      |     tk_void tk_id tk_parentecisIz  tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM3=new NNodo.Nodo("Parametros","parametros",contador++);  $$.lstNodo.push(parametrosM3); let temp3 = new NNodo.Nodo("ContenidoM","Contenido",contador++); temp3.searchNode($6); $$.lstNodo.push(temp3);  }
+      |     tk_void tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz  tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM1=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM1.searchNode($4); $$.lstNodo.push(parametrosM1) ;}
 ;
 /*Paramteris que puede tener una funcion o metodo*/
-PARAMETROSF_M: PARAMETROSF_M tk_coma DATETIPO tk_id {$$=$1; $$.push(new NNodo.Nodo("Parametro",$3+" "+$4,contador++));}
-      |        DATETIPO tk_id {$$=[]; $$.push(new NNodo.Nodo("Parametro",$1+" "+$2,contador++));}
+PARAMETROSF_M: PARAMETROSF_M tk_coma DATETIPO tk_id {$$=$1; $$.push(new NNodo.Nodo($3+"",$3+" "+$4,contador++));}
+      |        DATETIPO tk_id {$$=[]; $$.push(new NNodo.Nodo($1+"",$1+" "+$2,contador++));}
 ;
 /*Contendra las sentencias que pueden ir en un metodo*/
 ANALISISMEDIO: ANALISISMEDIO ANALISISMEDIO2 {$$=$1; $$.push($2);}
