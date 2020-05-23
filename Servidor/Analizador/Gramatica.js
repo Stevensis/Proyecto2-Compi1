@@ -123,10 +123,10 @@ case 14:
 this.$=new NNodo.Nodo("Funcion",$$[$0-6]+" "+$$[$0-5]+"",contador++); this.$.tipodato=$$[$0-6]; let parametrosF1=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF1.searchNode($$[$0-3]); this.$.lstNodo.push(parametrosF1);
 break;
 case 15:
-this.$=new NNodo.Nodo("Funcion",$$[$0-7]+" "+$$[$0-6]+"",contador++); this.$.tipodato=$$[$0-7];  let parametrosF2=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF2.searchNode($$[$0-4]); this.$.lstNodo.push(parametrosF2); let temp5 = new NNodo.Nodo("ContenidoF","Contenido",contador++); temp5.searchNode($$[$0-1]); this.$.lstNodo.push(temp5); 
+this.$=new NNodo.Nodo("Funcion",$$[$0-7]+" "+$$[$0-6]+"",contador++); this.$.tipodato=$$[$0-7];  let parametrosF2=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF2.searchNode($$[$0-4]); this.$.lstNodo.push(parametrosF2); let temp5 = new NNodo.Nodo("ContenidoF","contenido",contador++); temp5.searchNode($$[$0-1]); this.$.lstNodo.push(temp5); 
 break;
 case 16:
-this.$=new NNodo.Nodo("Funcion",$$[$0-6]+" "+$$[$0-5]+"",contador++); this.$.tipodato=$$[$0-6]; let parametrosF4=new NNodo.Nodo("Parametros","parametros",contador++); this.$.lstNodo.push(parametrosF4); let temp6 = new NNodo.Nodo("ContenidoF","Contenido",contador++); temp6.searchNode($$[$0-1]); this.$.lstNodo.push(temp6);   
+this.$=new NNodo.Nodo("Funcion",$$[$0-6]+" "+$$[$0-5]+"",contador++); this.$.tipodato=$$[$0-6]; let parametrosF4=new NNodo.Nodo("Parametros","parametros",contador++); this.$.lstNodo.push(parametrosF4); let temp6 = new NNodo.Nodo("ContenidoF","contenido",contador++); temp6.searchNode($$[$0-1]); this.$.lstNodo.push(temp6);   
 break;
 case 17:
 this.$=new NNodo.Nodo("tipoDato",$$[$0-1]+"",contador++); this.$.searchNode($$[$0]);
@@ -144,10 +144,10 @@ case 21:
 this.$=new NNodo.Nodo("Metodo",$$[$0-4]+"",contador++); let parametrosM2=new NNodo.Nodo("Parametros","parametros",contador++);  this.$.lstNodo.push(parametrosM2);
 break;
 case 22:
-this.$=new NNodo.Nodo("Metodo",$$[$0-6]+"",contador++); let parametrosM0=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM0.searchNode($$[$0-4]); this.$.lstNodo.push(parametrosM0) ; let temp4 = new NNodo.Nodo("ContenidoM","Contenido",contador++); temp4.searchNode($$[$0-1]); this.$.lstNodo.push(temp4); 
+this.$=new NNodo.Nodo("Metodo",$$[$0-6]+"",contador++); let parametrosM0=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM0.searchNode($$[$0-4]); this.$.lstNodo.push(parametrosM0) ; let temp4 = new NNodo.Nodo("ContenidoM","contenido",contador++); temp4.searchNode($$[$0-1]); this.$.lstNodo.push(temp4); 
 break;
 case 23:
-this.$=new NNodo.Nodo("Metodo",$$[$0-5]+"",contador++); let parametrosM3=new NNodo.Nodo("Parametros","parametros",contador++);  this.$.lstNodo.push(parametrosM3); let temp3 = new NNodo.Nodo("ContenidoM","Contenido",contador++); temp3.searchNode($$[$0-1]); this.$.lstNodo.push(temp3);  
+this.$=new NNodo.Nodo("Metodo",$$[$0-5]+"",contador++); let parametrosM3=new NNodo.Nodo("Parametros","parametros",contador++);  this.$.lstNodo.push(parametrosM3); let temp3 = new NNodo.Nodo("ContenidoM","contenido",contador++); temp3.searchNode($$[$0-1]); this.$.lstNodo.push(temp3);  
 break;
 case 24:
 this.$=new NNodo.Nodo("Metodo",$$[$0-5]+"",contador++); let parametrosM1=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM1.searchNode($$[$0-3]); this.$.lstNodo.push(parametrosM1) ;
