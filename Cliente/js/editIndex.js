@@ -10,12 +10,18 @@ function start(){
 
     $.post(url,{text:texto, text2:texto2},function(data,status){
         if(status.toString()=="success"){
-            alert("El resultado es: "+data.uno.toString());
+            alert("Analicis hecho");
+            if (data.uno.toString()=="Error") {
+              alert("Algo malo paso en el analisis. "+data.uno.toString());
+            }else{
+              alert("Todo Correcto "+data.uno.toString());
             $('#jstree-tree').jstree("destroy");
             arbol(data.uno);
             clasesT(data.dos);
             FuncionesT(data.tres);
             VariablesT(data.cuatro);
+            }
+            
         }else{
             alert("Error estado de conexion:"+status);
         }

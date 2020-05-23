@@ -15,6 +15,7 @@ var lstVariablesCC = [];
 var pruebaClases = new Array();
 var pruebaFunciones = new Array();
 var pruebaVariables = new Array();
+var pruebaErrores = new Array();
 var bandera1 = false;
 var app = express();
 app.use(bodyParser.json());
@@ -25,6 +26,7 @@ app.use(logger('dev'));
 app.post('/Analizar/', function (req, res) {
     lstVariablesP = [];
     lstVariablesC = [];
+    pruebaErrores = new Array();
     pruebaClases = new Array();
     pruebaFunciones = new Array();
     pruebaVariables = new Array();
@@ -32,17 +34,31 @@ app.post('/Analizar/', function (req, res) {
     var resultado = parser(entrada);
     var entrada2 = req.body.text2;
     var resultado2 = parser(entrada2);
-    copiaClase(resultado, resultado2);
-    var json = JSON.stringify(resultado, null, 2);
-    json = json.split('lexema').join('text').split('lstNodo').join('children');
-    var jsonClases = JSON.stringify(lstClasesC);
-    jsonClases = jsonClases.split('canCYM').join('Cantidad_Funciones_metodos');
-    imprimir();
-    //    console.log(jsonClases);
-    //    console.log(json)
-    //    tree(resultado)
-    res.send({ uno: json, dos: pruebaClases, tres: pruebaFunciones, cuatro: pruebaVariables });
+    if (resultado[1].length == 0) {
+        copiaClase(resultado[0], resultado2[0]);
+        var json = JSON.stringify(resultado[0], null, 2);
+        json = json.split('lexema').join('text').split('lstNodo').join('children');
+        var jsonClases = JSON.stringify(lstClasesC);
+        jsonClases = jsonClases.split('canCYM').join('Cantidad_Funciones_metodos');
+        imprimir();
+        //    console.log(jsonClases);
+        //    console.log(json)
+        //    tree(resultado)
+        res.send({ uno: json, dos: pruebaClases, tres: pruebaFunciones, cuatro: pruebaVariables });
+    }
+    else {
+        var lista = resultado[1];
+        console.log("entraqui");
+        listaError(lista);
+        res.send({ uno: "Error" });
+    }
 });
+function listaError(lstE) {
+    for (var index = 0; index < lstE.length; index++) {
+        var element = lstE[index].lexema;
+        console.log(element);
+    }
+}
 function copiaClase(principal, copia) {
     var MYFPrincipal = [];
     var MYFfCopia = [];

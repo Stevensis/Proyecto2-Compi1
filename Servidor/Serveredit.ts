@@ -6,7 +6,8 @@ import * as Nnodo from "./Arbol/Nodo";
 import * as NClase from "./Arbol/Clase";
 import * as NFunciones from "./Arbol/Funciones";
 import * as NVariables from "./Arbol/Variables";
-
+import * as NErrores from "./Arbol/Error";
+import * as NFErrores from "./Arbol/PError";
 var lstVariablesP: Array<Nnodo.Nodo> = [];
 var lstVariablesC: Array<Nnodo.Nodo> = [];
 var lstClasesC: Array<NClase.Clase> = [];
@@ -16,6 +17,7 @@ var lstVariablesCC: Array<NVariables.Variables> =[];
 var pruebaClases: string[][] = new Array();
 var pruebaFunciones: string[][] = new Array();
 var pruebaVariables: string[][] = new Array();
+var pruebaErrores: string[][] = new Array();
 
 var bandera1: boolean = false;
 var app=express();
@@ -27,6 +29,7 @@ app.use(logger( 'dev'));
 app.post('/Analizar/', function (req, res) {
     lstVariablesP = [];
     lstVariablesC = [];
+    pruebaErrores = new Array();
     pruebaClases= new Array();
     pruebaFunciones = new Array();
     pruebaVariables = new Array();
@@ -34,8 +37,9 @@ app.post('/Analizar/', function (req, res) {
     var resultado=parser(entrada);
     var entrada2 = req.body.text2;
     var resultado2 = parser(entrada2);
-    copiaClase(resultado,resultado2);
-    var json = JSON.stringify(resultado,null,2);
+    if (resultado[1].length==0) {
+    copiaClase(resultado[0],resultado2[0]);
+    var json = JSON.stringify(resultado[0],null,2);
     json = json.split('lexema').join('text').split('lstNodo').join('children');
     var jsonClases = JSON.stringify(lstClasesC);
     jsonClases = jsonClases.split('canCYM').join('Cantidad_Funciones_metodos');
@@ -44,7 +48,21 @@ app.post('/Analizar/', function (req, res) {
 //    console.log(json)
 //    tree(resultado)
     res.send({uno:json,dos:pruebaClases,tres:pruebaFunciones,cuatro:pruebaVariables});
+    }else{
+        var lista = resultado[1];
+        console.log("entraqui");
+       listaError(lista);
+        res.send({uno:"Error"});
+    }
+    
 });
+
+function listaError(lstE: Array<NErrores.Error>){
+    for (let index = 0; index < lstE.length; index++) {
+        const element = lstE[index].lexema;
+        console.log(element); 
+    }
+}
 
 function copiaClase(principal:Nnodo.Nodo,copia:Nnodo.Nodo){
     

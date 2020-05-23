@@ -3,8 +3,10 @@
 %{
     let NNodo=require('../Arbol/Nodo');
     let NError= require('../Arbol/Error');
-    let lstError=[];
+    let NFError= require('../Arbol/PError');
+    let lstError= new Array();
     let contador=0;
+    let contadorE=0;
 %}
 
 
@@ -87,7 +89,8 @@
 
 <<EOF>>     %{  return 'EOF';   %}
 
-.           { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.           {  lstError.push(new NError.Error(contadorE++, "Lexico",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido"));
+      console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
     
 /lex
 
@@ -105,10 +108,12 @@
 %start S
 %% 
 
-S : INICIO EOF { return $$=$1; return $$; }
+S : INICIO EOF {  $$=$1;  return [$$,lstError]; }
+
       ;
 INICIO :    IMPORTC CLASSP { $$= new NNodo.Nodo("Root","Root",contador++); $$.searchNode($1); $$.searchNode($2); }
       |     CLASSP      { $$= new NNodo.Nodo("Root","Root",contador++);$$.searchNode($1);  }
+      | error tk_llaveDe {lstError.push(new NError.Error(contadorE++, "Sintacticp",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido en esta posicion"));}
       ;
 /*Creamos imports*/
 IMPORTC :   IMPORTC tk_import tk_id tk_puntoycoma { $$=$1; $$.push(new NNodo.Nodo("Import",$2+" "+$3,contador++)) }
@@ -117,6 +122,7 @@ IMPORTC :   IMPORTC tk_import tk_id tk_puntoycoma { $$=$1; $$.push(new NNodo.Nod
 /*Declarmos la clase*/
 CLASSP :    CLASSP tk_class tk_id tk_llaveIz CUERPOCLASS tk_llaveDe { let temp = new NNodo.Nodo("class",$2+" "+$3,contador++); temp.searchNode($5); $$=$1; $$.push(temp); }
       |     tk_class tk_id tk_llaveIz CUERPOCLASS tk_llaveDe { $$=[]; let temp2 = new NNodo.Nodo("class",$1+" "+$2,contador++); temp2.searchNode($4); $$.push(temp2); }
+      | error tk_llaveDe {lstError.push(new NError.Error(contadorE++, "Sintacticp",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido en esta posicion"));}
       ;
 /*recuersivo la delcaracion de clases*/
 CUERPOCLASS:  CUERPOCLASS CUERPOCLASS2 {$$=$1; $$.push($2);}
@@ -132,6 +138,7 @@ DECLARACIONFUNCION: DATETIPO tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz tk
       |             DATETIPO tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1; let parametrosF1=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF1.searchNode($4); $$.lstNodo.push(parametrosF1);}
       |             DATETIPO tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1;  let parametrosF2=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosF2.searchNode($4); $$.lstNodo.push(parametrosF2); let temp5 = new NNodo.Nodo("ContenidoF","contenido",contador++); temp5.searchNode($7); $$.lstNodo.push(temp5); }
       |             DATETIPO tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Funcion",$1+" "+$2+"",contador++); $$.tipodato=$1; let parametrosF4=new NNodo.Nodo("Parametros","parametros",contador++); $$.lstNodo.push(parametrosF4); let temp6 = new NNodo.Nodo("ContenidoF","contenido",contador++); temp6.searchNode($6); $$.lstNodo.push(temp6);   }
+      | error tk_llaveDe {lstError.push(new NError.Error(contadorE++, "Sintacticp",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido en esta posicion"));}
 ;      
 /*Declaracion de variables*/
 DECLARACIONVARIABLE: DATETIPO LSTIDS {$$=new NNodo.Nodo("tipoDato",$1+"",contador++); $$.searchNode($2);}
@@ -146,6 +153,7 @@ DECLARACIONMETODO: tk_void tk_id tk_parentecisIz tk_parentecisDe tk_llaveIz tk_l
       |     tk_void tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM0=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM0.searchNode($4); $$.lstNodo.push(parametrosM0) ; let temp4 = new NNodo.Nodo("ContenidoM","contenido",contador++); temp4.searchNode($7); $$.lstNodo.push(temp4); }
       |     tk_void tk_id tk_parentecisIz  tk_parentecisDe tk_llaveIz ANALISISMEDIO tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM3=new NNodo.Nodo("Parametros","parametros",contador++);  $$.lstNodo.push(parametrosM3); let temp3 = new NNodo.Nodo("ContenidoM","contenido",contador++); temp3.searchNode($6); $$.lstNodo.push(temp3);  }
       |     tk_void tk_id tk_parentecisIz PARAMETROSF_M tk_parentecisDe tk_llaveIz  tk_llaveDe {$$=new NNodo.Nodo("Metodo",$2+"",contador++); let parametrosM1=new NNodo.Nodo("Parametros","parametros",contador++);  parametrosM1.searchNode($4); $$.lstNodo.push(parametrosM1) ;}
+      | error tk_llaveDe {lstError.push(new NError.Error(contadorE++, "Sintacticp",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido en esta posicion"));}
 ;
 /*Paramteris que puede tener una funcion o metodo*/
 PARAMETROSF_M: PARAMETROSF_M tk_coma DATETIPO tk_id {$$=$1; $$.push(new NNodo.Nodo($3+"",$3+" "+$4,contador++));}
@@ -154,6 +162,7 @@ PARAMETROSF_M: PARAMETROSF_M tk_coma DATETIPO tk_id {$$=$1; $$.push(new NNodo.No
 /*Contendra las sentencias que pueden ir en un metodo*/
 ANALISISMEDIO: ANALISISMEDIO ANALISISMEDIO2 {$$=$1; $$.push($2);}
       |        ANALISISMEDIO2 {$$=[]; $$.push($1);}
+      | error tk_llaveDe {lstError.push(new NError.Error(contadorE++, "Sintacticp",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido en esta posicion"));}
 ;
 
 ANALISISMEDIO2: RETURNMETODOF {$$=$1;}
@@ -169,6 +178,7 @@ ANALISISMEDIO2: RETURNMETODOF {$$=$1;}
             | tk_continue tk_puntoycoma {$$=new NNodo.Nodo("Continue","continue",contador++);}
             | DECLARACIONCONSOLE {$$=$1;}
             | DECLARACIONSWITCH {$$=$1;}
+            | error tk_llaveDe {lstError.push(new NError.Error(contadorE++, "Sintacticp",yytext,yylloc.first_line,yylloc.first_column,"Caracter no valido en esta posicion"));}
 ;
 /*Declaracion para el metodo Switch*/
 DECLARACIONSWITCH: tk_switch tk_parentecisIz ASIGNACIONVARIABLE tk_parentecisDe  tk_llaveIz DECLARACIONSWITCH2 tk_llaveDe {$$=new NNodo.Nodo("Switch","switch",contador++); $$.lstNodo.push($3); let contenidoSwitch = new NNodo.Nodo("CuerpoSwitch","cuerpo",contador++); contenidoSwitch.searchNode($6); $$.lstNodo.push(contenidoSwitch);}
